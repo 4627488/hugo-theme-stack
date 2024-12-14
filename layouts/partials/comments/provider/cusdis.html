@@ -12,6 +12,11 @@
         let cusdis = document.querySelector('#cusdis_thread iframe');
         if (cusdis) {
             window.CUSDIS.setTheme(theme)
+            if (theme === 'dark') {
+                cusdis.contentWindow.document.body.style.backgroundColor = '#303030';
+            } else {
+                cusdis.contentWindow.document.body.style.backgroundColor = '#fff';
+            }
         }
     }
 
