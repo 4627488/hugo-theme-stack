@@ -18,8 +18,8 @@
         {{- $galleryImage = true -}}
 
         {{- if (default true .Page.Site.Params.imageProcessing.content.enabled) -}}
-            {{- $small := $image.Resize `480x` -}}
-            {{- $big := $image.Resize `1024x` -}}
+            {{- $small := $image.Resize `480x webp` -}}
+            {{- $big := $image.Resize `1024x webp` -}}
             {{- $smallLink := $small.RelPermalink -}}
             {{- $bigLink := $big.RelPermalink -}}
             {{ if .Page.Site.Params.CDN.enable }}
