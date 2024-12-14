@@ -20,7 +20,13 @@
         {{- if (default true .Page.Site.Params.imageProcessing.content.enabled) -}}
             {{- $small := $image.Resize `480x` -}}
             {{- $big := $image.Resize `1024x` -}}
-            {{- $Srcset = printf `%s 480w, %s 1024w` $small.RelPermalink $big.RelPermalink -}}
+            {{- $smallLink := $small.RelPermalink -}}
+            {{- $bigLink := $big.RelPermalink -}}
+            {{ if .Page.Site.Params.CDN.enable }}
+                {{- $smallLink = (print .Page.Site.Params.CDN.host $smallLink) -}}
+                {{- $bigLink = (print .Page.Site.Params.CDN.host $bigLink) -}}
+            {{ end }}
+            {{- $Srcset = printf `%s 480w, %s 1024w` $smallLink $bigLink -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}
