@@ -13,16 +13,18 @@
     {{- $Permalink = $image.RelPermalink -}}
 
     {{- if $notSVG -}}
+        {{- $image = $image.Process "webp" }}
+        {{- $Permalink = $image.RelPermalink -}}
         {{- $Width = $image.Width -}}
         {{- $Height = $image.Height -}}
         {{- $galleryImage = true -}}
 
         {{- if (default true .Page.Site.Params.imageProcessing.content.enabled) -}}
-            {{- $small := $image.Resize `480x webp` -}}
-            {{- $big := $image.Resize `1024x webp` -}}
+            {{- $small := $image.Resize `480x` -}}
+            {{- $big := $image.Resize `1024x` -}}
             {{- $smallLink := $small.RelPermalink -}}
             {{- $bigLink := $big.RelPermalink -}}
-            {{ if .Page.Site.Params.CDN.enable }}
+            {{ if and .Page.Site.Params.CDN.enable (not hugo.IsServer) -}}
                 {{- $smallLink = (print .Page.Site.Params.CDN.host $smallLink) -}}
                 {{- $bigLink = (print .Page.Site.Params.CDN.host $bigLink) -}}
             {{ end }}
@@ -32,7 +34,7 @@
 {{- end -}}
 
 {{- $img_destination := .Destination }}
-{{ if .Page.Site.Params.CDN.enable }}
+{{ if and .Page.Site.Params.CDN.enable (not hugo.IsServer) -}}
     {{ $img_destination = (print .Page.Site.Params.CDN.host (path.Join .Page.RelPermalink .Destination)) }}
 {{ end }}
 
