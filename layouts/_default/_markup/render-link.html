@@ -1,3 +1,7 @@
+{{- $url := urls.Parse .Destination -}}
 <a class="link" href="{{ .Destination | safeURL }}" {{ with .Title}} title="{{ . }}"
     {{ end }}{{ if strings.HasPrefix .Destination "http" }} target="_blank" rel="noopener"
     {{ end }}>{{ .Text | safeHTML }}</a>
+{{- if and (strings.HasPrefix .Destination "http") (not (findRE "^<figure.*?>(.|\n)*?</firure>$" .Text)) -}}
+<sup>{{- partial "helper/icon" "external-link" -}}</sup>
+{{- end -}}
