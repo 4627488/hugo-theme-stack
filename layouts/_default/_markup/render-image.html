@@ -34,9 +34,6 @@
 {{- end -}}
 
 {{- $img_destination := .Destination }}
-{{ if and .Page.Site.Params.CDN.enable (not hugo.IsServer) -}}
-    {{ $img_destination = (print .Page.Site.Params.CDN.host (path.Join .Page.RelPermalink .Destination)) }}
-{{ end }}
 
 <img src="{{ $img_destination | safeURL }}"
     {{ with $Width }}width="{{ . }}"{{ end }}
